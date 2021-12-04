@@ -1,1 +1,21 @@
-<p>textbox works!</p>
+
+<p>{{fieldConfig.label}}</p>
+<dx-text-box [formControlName]="fieldConfig.name" [isValid]="isValid(fieldConfig.name)" [showClearButton]="'true'"></dx-text-box>
+<!--
+<div class="dx-field">
+  <app-field-label-ui [label]="fieldConfig.label"></app-field-label-ui>
+  <div class="dx-field-value">
+    <dx-text-box [showClearButton]="true"
+      [placeholder]="fieldConfig.placeholder"
+      [name]="fieldConfig.name"
+      [formControlName]="fieldConfig.name"
+      [required]="fieldConfig.required"
+      [isValid]="!isInValid(fieldConfig.name)">
+    </dx-text-box>
+    <small class="text-red-700 text-sm" *ngIf="isInValid(fieldConfig.name)">
+      <span *ngFor="let err of Errors(fieldConfig.name);">
+        {{err}}
+      </span>
+    </small>
+  </div>
+</div> -->

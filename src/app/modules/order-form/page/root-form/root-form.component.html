@@ -1,24 +1,28 @@
 
 <h1>Angular reactive form</h1>
-<div class="container" *ngIf="form; else loading">
-    <form [formGroup]="form">
-      <ng-container *ngFor="let field of formFields">
-        <div [ngSwitch]="field.controlType">
-          <div *ngSwitchCase="'numberbox'">
-            <p>{{field.label}}</p>
-            <dx-number-box [formControlName]="field.name" [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-number-box>
-          </div>
-          <div *ngSwitchCase="'textbox'">
-            <p>{{field.label}}</p>
-            <dx-text-box [formControlName]="field.name" [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
-          </div>
-        </div>
+<div class="container" *ngIf="jsonFormSchema && rootForm; else loading">
+    <form [formGroup]="rootForm">
+      <p>form status: {{rootForm.status}}<p>
+      <ng-container  *ngFor="let sKey of FormSchemaKey">
+        <ng-container [formGroupName]="sKey" *ngFor="let field of jsonFormSchema[sKey]">
+          <p>subform status: {{rootForm.get(sKey).status}}<p>
+          <div [ngSwitch]="field.controlType">
+            <div *ngSwitchCase="'numberbox'">
+              <p>{{field.label}}</p>
+              <dx-number-box [formControlName]="field.name" [isValid]="isValid(sKey, field.name)" [showClearButton]="'true'"></dx-number-box>
+              <p>numberbox valid: {{isValid(sKey, field.name)}}<p>
+            </div>
+            <div *ngSwitchCase="'textbox'">
+              <p>{{field.label}}</p>
+              <dx-text-box [formControlName]="field.name" [isValid]="isValid(sKey, field.name)" [showClearButton]="'true'"></dx-text-box>
+              <p>textbox valid: {{isValid(sKey, field.name)}}<p>
 
+              <!-- <app-textbox [fieldConfig]="field"></app-textbox> -->
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
     </form>
-    <p>form status: {{form.status}}<p>
-    <p>numberbox valid: {{isValid('numberbox')}}<p>
-    <p>textbox valid: {{isValid('textbox')}}<p>
 </div>
 
 <ng-template #loading>

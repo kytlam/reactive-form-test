@@ -1,5 +1,6 @@
 {
-    "schema": [
+    "schema": {
+      "basic": [
         {
           "controlType": "numberbox",
           "name": "numberbox",
@@ -27,6 +28,5 @@
           "options": {}
         }
     ]
-
-    
+    }
 }

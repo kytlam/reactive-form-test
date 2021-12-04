@@ -1,6 +1,6 @@
 export class CustomAsyncValidator {
 }
-import { AsyncValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
+import { AsyncValidatorFn, ValidationErrors, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { mapTo, delay } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
@@ -15,5 +15,16 @@ export function AsyncValidator(): AsyncValidatorFn {
       }
     }
     return test;
+  };
+}
+
+export function SyncValidator(): ValidatorFn {
+  return (control: AbstractControl):ValidationErrors | null => {
+    if (control.value) {
+      if (control.value === 1 || control.value === 2 || control.value === '1' || control.value === '2') {
+        return { AlreadyExists: 'not valid' };
+      }
+    }
+    return null;
   };
 }
