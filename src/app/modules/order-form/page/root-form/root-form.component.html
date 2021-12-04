@@ -1,0 +1,12 @@
+<div class="container">
+    <h1>Angular reactive form</h1>
+    <form [formGroup]="form">
+  <p>numberbox</p>
+  <dx-number-box [formControlName]="'numberbox'" [isValid]="isValid('numberbox')" [showClearButton]="'true'"></dx-number-box>
+  <p>textbox</p>
+  <dx-text-box [formControlName]="'textbox'" [isValid]="isValid('textbox')" [showClearButton]="'true'"></dx-text-box>
+    </form>
+<p>form status: {{form.status}}<p>
+<p>numberbox valid: {{isValid('numberbox')}}<p>
+<p>textbox valid: {{isValid('textbox')}}<p>
+</div>
