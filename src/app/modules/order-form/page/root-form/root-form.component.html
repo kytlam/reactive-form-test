@@ -1,26 +1,11 @@
 
 <h1>Angular reactive form</h1>
-<div class="container" *ngIf="jsonFormSchema && rootForm; else loading">
+<div class="container" *ngIf="jsonRootFormSchema && rootForm; else loading">
     <form [formGroup]="rootForm">
       <p>form status: {{rootForm.status}}<p>
+        <p>form status: {{rootForm.value | json}}<p>
       <ng-container  *ngFor="let sKey of FormSchemaKey">
-        <ng-container [formGroupName]="sKey" *ngFor="let field of jsonFormSchema[sKey]">
-          <p>subform status: {{rootForm.get(sKey).status}}<p>
-          <div [ngSwitch]="field.controlType">
-            <div *ngSwitchCase="'numberbox'">
-              <p>{{field.label}}</p>
-              <dx-number-box [formControlName]="field.name" [isValid]="isValid(sKey, field.name)" [showClearButton]="'true'"></dx-number-box>
-              <p>numberbox valid: {{isValid(sKey, field.name)}}<p>
-            </div>
-            <div *ngSwitchCase="'textbox'">
-              <p>{{field.label}}</p>
-              <dx-text-box [formControlName]="field.name" [isValid]="isValid(sKey, field.name)" [showClearButton]="'true'"></dx-text-box>
-              <p>textbox valid: {{isValid(sKey, field.name)}}<p>
-
-              <!-- <app-textbox [fieldConfig]="field"></app-textbox> -->
-            </div>
-          </div>
-        </ng-container>
+        <app-dynamic-form [formGroupName]="sKey" [jsonFormSchema]="jsonRootFormSchema[sKey]"></app-dynamic-form>
       </ng-container>
     </form>
 </div>

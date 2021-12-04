@@ -1,14 +1,23 @@
-<!-- <div>
-    <ng-container *ngFor="let field of formFields">
-        <div [ngSwitch]="field.controlType">
-            <div *ngSwitchCase="'numberbox'">
-            <p>{{field.label}}</p>
-            <dx-number-box [formControlName]="field.name" [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-number-box>
-            </div>
-            <div *ngSwitchCase="'textbox'">
-            <p>{{field.label}}</p>
-            <dx-text-box [formControlName]="field.name" [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
-            </div>
-        </div>
-    </ng-container>
-</div> -->
+<div *ngIf="jsonFormSchema">
+  {{_form.value | json}}
+  <ng-container [formGroup]="_form" *ngFor="let field of jsonFormSchema">
+    <p>subform status: {{_form.status}}<p>
+    <div [ngSwitch]="field.controlType">
+      <div *ngSwitchCase="'numberbox'">
+        <p>{{field.label}}</p>
+        <dx-number-box [formControlName]="field.name"
+        (blur)="onInputBlurred()"
+        [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-number-box>
+        <p>numberbox valid: {{isValid(field.name)}}<p>
+      </div>
+      <div *ngSwitchCase="'textbox'">
+        <p>{{field.label}}</p>
+        <dx-text-box [formControlName]="field.name"        (blur)="onInputBlurred()"
+        [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
+        <p>textbox valid: {{isValid(field.name)}}<p>
+
+        <!-- <app-textbox [fieldConfig]="field"></app-textbox> -->
+      </div>
+    </div>
+  </ng-container>
+</div>
