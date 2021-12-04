@@ -1,12 +1,26 @@
-<div class="container">
-    <h1>Angular reactive form</h1>
+
+<h1>Angular reactive form</h1>
+<div class="container" *ngIf="form; else loading">
     <form [formGroup]="form">
-  <p>numberbox</p>
-  <dx-number-box [formControlName]="'numberbox'" [isValid]="isValid('numberbox')" [showClearButton]="'true'"></dx-number-box>
-  <p>textbox</p>
-  <dx-text-box [formControlName]="'textbox'" [isValid]="isValid('textbox')" [showClearButton]="'true'"></dx-text-box>
+      <ng-container *ngFor="let field of formFields">
+        <div [ngSwitch]="field.controlType">
+          <div *ngSwitchCase="'numberbox'">
+            <p>{{field.label}}</p>
+            <dx-number-box [formControlName]="field.name" [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-number-box>
+          </div>
+          <div *ngSwitchCase="'textbox'">
+            <p>{{field.label}}</p>
+            <dx-text-box [formControlName]="field.name" [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
+          </div>
+        </div>
+
+      </ng-container>
     </form>
-<p>form status: {{form.status}}<p>
-<p>numberbox valid: {{isValid('numberbox')}}<p>
-<p>textbox valid: {{isValid('textbox')}}<p>
+    <p>form status: {{form.status}}<p>
+    <p>numberbox valid: {{isValid('numberbox')}}<p>
+    <p>textbox valid: {{isValid('textbox')}}<p>
 </div>
+
+<ng-template #loading>
+Form Loading
+</ng-template>

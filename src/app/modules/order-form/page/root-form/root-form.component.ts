@@ -1,3 +1,4 @@
+import { JsonCallService } from './../../services/json-call.service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import 'rxjs/add/operator/map';
@@ -14,14 +15,20 @@ import { Subject } from 'rxjs';
 })
 export class RootFormComponent implements OnInit,OnDestroy {
   form: FormGroup;
+  formFields: any[];
+  
   private _destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef
+    , private jsonCall : JsonCallService) { }
 
   ngOnInit(): void {
-    this._createFormGroup();
+    this.jsonCall.getJsonFile("json-forms/test-form").subscribe(res => {
+      this.formFields = res.schema;
+      this._createFormGroup();
 
-    this._setupObservables();
+      this._setupObservables();
+    })
 
   }
   _createFormGroup() {

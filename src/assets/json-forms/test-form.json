@@ -1,0 +1,32 @@
+{
+    "schema": [
+        {
+          "controlType": "numberbox",
+          "name": "numberbox",
+          "label": "Number Box",
+          "placeholder": "Please fill in number",
+          "required": true,
+          "validation": [
+            {
+              "name": "required"
+            }
+          ],
+          "options": {}
+        },
+        {
+          "controlType": "textbox",
+          "name": "textbox",
+          "label": "Text Box",
+          "placeholder": "Please fill in test",
+          "required": true,
+          "validation": [
+            {
+              "name": "required"
+            }
+          ],
+          "options": {}
+        }
+    ]
+
+    
+}
