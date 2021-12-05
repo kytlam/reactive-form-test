@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AbstractFormGroupExt } from '../../extensions/abstract-form-group-ext';
 import { SyncValidator } from '../../validators/custom-async-validator';
 
 @Component({
@@ -11,21 +12,27 @@ import { SyncValidator } from '../../validators/custom-async-validator';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: DynamicFormComponent, //forwardRef(() => DynamicFormComponent),
+      useExisting: forwardRef(() => DynamicFormComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => DynamicFormComponent),
       multi: true
     }
+
   ]
 })
 
-export class DynamicFormComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class DynamicFormComponent extends AbstractFormGroupExt implements OnInit{
 
-  _form!: FormGroup;
   @Input() jsonFormSchema!: any[];
-  private _destroy$: Subject<void> = new Subject<void>();
 
   disabled: boolean;
 
-  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) {
+    super();
+  }
 
   ngOnInit() {
     if(this.jsonFormSchema && this.jsonFormSchema.length > 0) {
@@ -66,41 +73,9 @@ export class DynamicFormComponent implements ControlValueAccessor, OnInit, OnDes
     }
   }
 
-  ngOnDestroy() {
-    if (this._destroy$ && !this._destroy$.closed) {
-      this._destroy$.next();
-      this._destroy$.complete();
-    }
-  }
 
-  public _onTouched: () => {};
-  public _onChangeSub: Subscription;
 
-  public registerOnChange(fn: any): void {
-    this._form.valueChanges.pipe(takeUntil(this._destroy$)).subscribe(fn);
-  }
 
-  public writeValue(value: any): void {
-    if (value) {
-      this._form.patchValue(value);
-      // this._form.setValue(value);
-    }
-  }
 
-  public registerOnTouched(fn: any): void {
-    this._onTouched = fn;
-  }
-
-  setDisabledState?(_isDisabled: boolean): void {
-    if(_isDisabled) {
-      this._form.disable();
-    } else {
-      this._form.enable();
-    }
-  }
-
-  public onInputBlurred(): void {
-    this._onTouched();
-  }
 
 }

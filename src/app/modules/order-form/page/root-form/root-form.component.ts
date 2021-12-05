@@ -70,4 +70,14 @@ export class RootFormComponent implements OnInit, OnDestroy {
 //https://github.com/myndpm/open-source/tree/master/libs/forms
 //https://www.digitalocean.com/community/tutorials/angular-reactive-forms-formarray-dynamic-fields
 //https://github.com/angular/angular/issues/31958
+//https://stackoverflow.com/questions/66332284/angular-validation-state-of-a-nested-controlvalueaccessor-is-not-correctly-propa
+//https://blog.kevinyang.net/2020/04/20/angular-form-valuechanges/
+//https://stackoverflow.com/questions/42197806/what-is-updatevalueandvalidity
+//https://plnkr.co/edit/BvnnfxHK3mgNVIVI7Yhs?p=preview&preview
+//https://github.com/angular/angular/issues/14542
+//https://stackoverflow.com/questions/67230637/how-can-i-send-my-nested-formgroupname-to-my-input-component-connected-to-contro?rq=1
+//https://stackblitz.com/edit/ngx-sub-form-qmnluc?file=src%2Fapp%2Fuser-form%2Fuser-child%2Fuser-child-form.component.ts
+//https://indepth.dev/posts/1245/angular-nested-reactive-forms-using-controlvalueaccessors-cvas
+
+
 }
