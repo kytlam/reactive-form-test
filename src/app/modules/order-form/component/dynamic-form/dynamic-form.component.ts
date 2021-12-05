@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, FormArray, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SyncValidator } from '../../validators/custom-async-validator';
 
@@ -11,45 +11,21 @@ import { SyncValidator } from '../../validators/custom-async-validator';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DynamicFormComponent),
+      useExisting: DynamicFormComponent, //forwardRef(() => DynamicFormComponent),
       multi: true
     }
   ]
 })
+
 export class DynamicFormComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   _form!: FormGroup;
   @Input() jsonFormSchema!: any[];
-
   private _destroy$: Subject<void> = new Subject<void>();
 
-  public onChange: (value: string) => void;
-  public onTouched: () => void;
+  disabled: boolean;
 
   constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) { }
-
-  public writeValue(value: any): void {
-    if (value && value === "") {
-      return;
-    }
-
-    if (value) {
-      this._form.patchValue(value);
-    }
-  }
-
-  public registerOnChange(fn: (value: any) => void): void {
-    // this._form.valueChanges.subscribe(values => fn(values));
-    this.onChange = fn;
-  }
-
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState?(_isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
 
   ngOnInit() {
     if(this.jsonFormSchema && this.jsonFormSchema.length > 0) {
@@ -59,28 +35,15 @@ export class DynamicFormComponent implements ControlValueAccessor, OnInit, OnDes
 
   buildForm() {
     this._createFormGroup();
-    this._setupObservables();
   }
 
   _createFormGroup() {
-    // this._form = this.fb.group({});
-    this._form = this._createGroup();
-    // Object.keys(this.jsonFormSchema).forEach((key:string) => {
-    // this.jsonFormSchema.forEach((key:string) => {
-    //   let group = this._createGroup(key);
-    //   this._form.addControl(key, group);
-    // });
-    console.log("xxxxx" , this.jsonFormSchema);
-    console.log("xxxxx" , this._form);
-  }
-
-  _createGroup = (): FormGroup => {
-    const group = this.fb.group({});
+    this._form = this.fb.group({});
     this.jsonFormSchema.filter(({controlType}) => controlType !== "button")
       .forEach((element: any) => {
-      group.addControl(element.name, this._createControl(element) )
+      this._form.addControl(element.name,  this._createControl(element) )
     });
-    return group
+    console.log("group: " , this._form);
   }
 
   _createControl = (config: any): FormControl | FormArray  => {
@@ -90,6 +53,19 @@ export class DynamicFormComponent implements ControlValueAccessor, OnInit, OnDes
     let validator = SyncValidator();
     return this.fb.control({ value: value, disabled: disabled } , validator);
   }
+
+  isValid(name: string ): any {
+    let control = null;
+    if (this._form) {
+      control= this._form.get(name) as FormControl;
+    }
+    if (control) {
+      return control.valid || !control.touched;
+    } else {
+      return true;
+    }
+  }
+
   ngOnDestroy() {
     if (this._destroy$ && !this._destroy$.closed) {
       this._destroy$.next();
@@ -97,31 +73,34 @@ export class DynamicFormComponent implements ControlValueAccessor, OnInit, OnDes
     }
   }
 
-  isValid(name: string ): any {
-    console.log(" isValid: ", name)
-    let control = null;
-    if (this._form) {
-      control= this._form.get(name) as FormControl;
+  public _onTouched: () => {};
+  public _onChangeSub: Subscription;
+
+  public registerOnChange(fn: any): void {
+    this._form.valueChanges.pipe(takeUntil(this._destroy$)).subscribe(fn);
+  }
+
+  public writeValue(value: any): void {
+    if (value) {
+      this._form.patchValue(value);
+      // this._form.setValue(value);
     }
-    if (control) {
-      console.log(" isValid: ", control)
-      return control.valid || !control.touched;
+  }
+
+  public registerOnTouched(fn: any): void {
+    this._onTouched = fn;
+  }
+
+  setDisabledState?(_isDisabled: boolean): void {
+    if(_isDisabled) {
+      this._form.disable();
     } else {
-      return true;
+      this._form.enable();
     }
   }
 
   public onInputBlurred(): void {
-    this.onTouched();
+    this._onTouched();
   }
-  private _setupObservables = (): void => {
-    this._form.valueChanges.pipe(takeUntil(this._destroy$)).subscribe(value => {
-      console.log(" value  changed ", value);
-      this.onChange(value);
-      this.changeDetectorRef.detectChanges;
-      // if (this._onChange) {
-      //   this._onChange(value);
-      // }
-    });
-  }
+
 }

@@ -1,7 +1,8 @@
 <div *ngIf="jsonFormSchema">
-  {{_form.value | json}}
+  basic form status : {{_form.status}}
+  <br />
+  basic form value :  {{_form.value | json}}
   <ng-container [formGroup]="_form" *ngFor="let field of jsonFormSchema">
-    <p>subform status: {{_form.status}}<p>
     <div [ngSwitch]="field.controlType">
       <div *ngSwitchCase="'numberbox'">
         <p>{{field.label}}</p>
@@ -12,10 +13,9 @@
       </div>
       <div *ngSwitchCase="'textbox'">
         <p>{{field.label}}</p>
-        <dx-text-box [formControlName]="field.name"        (blur)="onInputBlurred()"
+        <dx-text-box [formControlName]="field.name" (blur)="onInputBlurred()"
         [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
         <p>textbox valid: {{isValid(field.name)}}<p>
-
         <!-- <app-textbox [fieldConfig]="field"></app-textbox> -->
       </div>
     </div>

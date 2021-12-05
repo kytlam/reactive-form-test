@@ -3,9 +3,12 @@
 <div class="container" *ngIf="jsonRootFormSchema && rootForm; else loading">
     <form [formGroup]="rootForm">
       <p>form status: {{rootForm.status}}<p>
-        <p>form status: {{rootForm.value | json}}<p>
-      <ng-container  *ngFor="let sKey of FormSchemaKey">
-        <app-dynamic-form [formGroupName]="sKey" [jsonFormSchema]="jsonRootFormSchema[sKey]"></app-dynamic-form>
+        <br />
+        <p>form value: {{rootForm.value | json}}<p>
+      <ng-container *ngFor="let sKey of FormSchemaKey">
+        <hr/>
+        <pre>form Control Name : {{ sKey }}</pre>
+        <app-dynamic-form [formControlName]="sKey" [jsonFormSchema]="jsonRootFormSchema[sKey]"></app-dynamic-form>
       </ng-container>
     </form>
 </div>
