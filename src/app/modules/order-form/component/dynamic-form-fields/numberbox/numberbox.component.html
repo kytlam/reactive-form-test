@@ -1,1 +1,7 @@
-<p>numberbox works!</p>
+<div [formGroup]="_form">
+    <p>{{fieldConfig.label}}</p>
+        <dx-number-box [formControlName]="fieldConfig.name"
+        (blur)="onInputBlurred()"
+        [isValid]="isValid(fieldConfig.name)" [showClearButton]="'true'"></dx-number-box>
+    <p>numberbox valid: {{isValid(fieldConfig.name)}}<p> 
+</div>

@@ -1,10 +1,13 @@
 
 <h1>Angular reactive form</h1>
-<div class="container" *ngIf="jsonRootFormSchema && rootForm; else loading">
+<div class="container box"  [ngClass]="{'green':rootForm.valid}" *ngIf="jsonRootFormSchema && rootForm; else loading">
     <form [formGroup]="rootForm">
-      <p>form status: {{rootForm.status}}<p>
-        <br />
-        <p>form value: {{rootForm.value | json}}<p>
+      <ul>
+        <li>valid: {{rootForm.valid}}</li>
+        <li>dirty: {{rootForm.dirty}}</li>
+        <li>touched: {{rootForm.touched}}</li>
+        <li>form value: {{rootForm.value | json}}</li>
+      </ul>
       <ng-container *ngFor="let sKey of FormSchemaKey">
         <hr/>
         <pre>form Control Name : {{ sKey }}</pre>

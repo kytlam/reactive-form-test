@@ -55,4 +55,15 @@ export class AbstractFormGroupExt<T = any> implements ControlValueAccessor
     };
   }
 
+  isValid( name: string ): boolean {
+    let control = null;
+    if (this._form) {
+      control = this._form.get(name);
+    }
+    if (control) {
+      return control.valid || !control.touched;
+    } else {
+      return true;
+    }
+  }
 }

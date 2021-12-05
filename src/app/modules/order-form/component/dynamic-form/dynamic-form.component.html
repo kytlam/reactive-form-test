@@ -1,23 +1,32 @@
-<div *ngIf="jsonFormSchema">
-  basic form status : {{_form.status}}
-  <br />
-  basic form value :  {{_form.value | json}}
+<div class="container box" [ngClass]="{'green':_form.valid}" *ngIf="jsonFormSchema && _form; else subloading" >
+  <ul>
+    <li>valid: {{_form.valid}}</li>
+    <li>dirty: {{_form.dirty}}</li>
+    <li>touched: {{_form.touched}}</li>
+    <li>form value: {{_form.value | json}}</li>
+  </ul>
   <ng-container [formGroup]="_form" *ngFor="let field of jsonFormSchema">
     <div [ngSwitch]="field.controlType">
       <div *ngSwitchCase="'numberbox'">
-        <p>{{field.label}}</p>
+        <!-- <p>{{field.label}}</p>
         <dx-number-box [formControlName]="field.name"
         (blur)="onInputBlurred()"
         [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-number-box>
-        <p>numberbox valid: {{isValid(field.name)}}<p>
+        <p>numberbox valid: {{isValid(field.name)}}<p> -->
+        <app-numberbox [fieldConfig]="field" [formControlName]="field.name"></app-numberbox>
       </div>
-      <div *ngSwitchCase="'textbox'">
-        <p>{{field.label}}</p>
+       <div *ngSwitchCase="'textbox'">
+      <!--  <p>{{field.label}}</p>
         <dx-text-box [formControlName]="field.name" (blur)="onInputBlurred()"
         [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
-        <p>textbox valid: {{isValid(field.name)}}<p>
-        <!-- <app-textbox [fieldConfig]="field"></app-textbox> -->
+        <p>textbox valid: {{isValid(field.name)}}<p> -->
+        <app-textbox [fieldConfig]="field" [formControlName]="field.name"></app-textbox>
       </div>
     </div>
   </ng-container>
 </div>
+
+<ng-template #subloading>
+Sub Form Loading
+</ng-template>
+

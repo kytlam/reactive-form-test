@@ -20,7 +20,6 @@ import { SyncValidator } from '../../validators/custom-async-validator';
       useExisting: forwardRef(() => DynamicFormComponent),
       multi: true
     }
-
   ]
 })
 
@@ -30,9 +29,7 @@ export class DynamicFormComponent extends AbstractFormGroupExt implements OnInit
 
   disabled: boolean;
 
-  constructor(private fb: FormBuilder, private changeDetectorRef: ChangeDetectorRef) {
-    super();
-  }
+  constructor(private fb: FormBuilder) { super(); }
 
   ngOnInit() {
     if(this.jsonFormSchema && this.jsonFormSchema.length > 0) {
@@ -48,9 +45,10 @@ export class DynamicFormComponent extends AbstractFormGroupExt implements OnInit
     this._form = this.fb.group({});
     this.jsonFormSchema.filter(({controlType}) => controlType !== "button")
       .forEach((element: any) => {
-      this._form.addControl(element.name,  this._createControl(element) )
+      // this._form.addControl(element.name,  this._createControl(element) )
+      this._form.addControl(element.name, this.fb.control({ value: null }, SyncValidator()));
     });
-    console.log("group: " , this._form);
+    console.log("group-----------: " , this._form);
   }
 
   _createControl = (config: any): FormControl | FormArray  => {
