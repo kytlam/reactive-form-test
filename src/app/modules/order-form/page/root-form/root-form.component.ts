@@ -43,12 +43,10 @@ export class RootFormComponent implements OnInit, OnDestroy {
   }
 
   _createFormGroup() {
-    this.rootForm = this.fb.group({
-      basic: [null, Validators.required]
+    this.rootForm = this.fb.group({});
+    Object.keys(this.jsonRootFormSchema).forEach((key:string) => {
+      this.rootForm.addControl(key, this.fb.control({value: null}, Validators.required));
     });
-    // Object.keys(this.jsonRootFormSchema).forEach((key:string) => {
-    //   this.rootForm.addControl(key, this.fb.group({}));
-    // });
     console.log("root form ",this.rootForm)
     setTimeout(_ => { this.rootForm.patchValue(this.data) },50)
   }
@@ -71,4 +69,5 @@ export class RootFormComponent implements OnInit, OnDestroy {
   }
 //https://github.com/myndpm/open-source/tree/master/libs/forms
 //https://www.digitalocean.com/community/tutorials/angular-reactive-forms-formarray-dynamic-fields
+//https://github.com/angular/angular/issues/31958
 }
