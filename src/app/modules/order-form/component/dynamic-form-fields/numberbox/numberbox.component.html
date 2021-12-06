@@ -5,3 +5,23 @@
         [isValid]="isValid(fieldConfig.name)" [showClearButton]="'true'"></dx-number-box>
     <p>numberbox valid: {{isValid(fieldConfig.name)}}<p> 
 </div>
+<!-- 
+<div class="dx-field"  [formGroup]="_form">
+    <app-field-label-ui [label]="fieldConfig.label"></app-field-label-ui>
+    <div class="dx-field-value">
+      <dx-number-box [showClearButton]="true"
+        [placeholder]="fieldConfig.placeholder"
+        [name]="fieldConfig.name"
+        [formControlName]="fieldConfig.name"
+        [required]="fieldConfig.required"
+        [mode]="fieldConfig.mode"
+        [isValid]="isValid(fieldConfig.name)">
+      </dx-number-box>
+      <small class="text-red-700 text-sm" *ngIf="!isValid(fieldConfig.name)">
+        <span *ngFor="let err of Errors(fieldConfig.name);">
+          {{err}}
+        </span>
+      </small>
+    </div>
+  </div> 
+-->

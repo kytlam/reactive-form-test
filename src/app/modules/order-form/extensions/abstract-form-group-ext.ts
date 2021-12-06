@@ -66,4 +66,33 @@ export class AbstractFormGroupExt<T = any> implements ControlValueAccessor
       return true;
     }
   }
+
+  Errors = (name: string): string[] => {
+    let errors:string[] = [];
+    let control = null;
+    if (this._form) {
+      control = this._form.get(name);
+    }
+    if(control) {
+        let keys = Object.keys(control.errors);
+        if(keys.length > 0) {
+            errors = keys.map(x => {
+              let message = `errors.validate.${x}`;
+              switch(x) {
+                  case "required": {
+                      return `${message} ${`forms.fields.${name.toLowerCase()}.label`}`;
+                  }
+                  default: {
+                    let err = control.errors;
+                    if(err && err[x]) {
+                        return err[x];
+                    }
+                    return "Unknown Error";
+                  }
+              }
+            });
+        }
+    }
+    return errors;
+}
 }

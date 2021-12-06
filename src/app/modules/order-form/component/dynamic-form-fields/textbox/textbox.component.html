@@ -5,7 +5,7 @@
   <p>textbox valid: {{isValid(fieldConfig.name)}}<p>
 </div>
 <!--
-<div class="dx-field">
+<div class="dx-field"  [formGroup]="_form">
   <app-field-label-ui [label]="fieldConfig.label"></app-field-label-ui>
   <div class="dx-field-value">
     <dx-text-box [showClearButton]="true"
@@ -13,12 +13,14 @@
       [name]="fieldConfig.name"
       [formControlName]="fieldConfig.name"
       [required]="fieldConfig.required"
-      [isValid]="!isInValid(fieldConfig.name)">
+      [isValid]="isValid(fieldConfig.name)">
     </dx-text-box>
-    <small class="text-red-700 text-sm" *ngIf="isInValid(fieldConfig.name)">
+    <small class="text-red-700 text-sm" *ngIf="!isValid(fieldConfig.name)">
       <span *ngFor="let err of Errors(fieldConfig.name);">
         {{err}}
       </span>
     </small>
   </div>
-</div> -->
+</div>
+
+ -->
