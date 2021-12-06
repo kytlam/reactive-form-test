@@ -1,12 +1,24 @@
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { AbstractFormGroupExt } from '../../../extensions/abstract-form-group-ext';
 import { SyncValidator } from '../../../validators/custom-async-validator';
 
 @Component({
   selector: 'app-textbox',
   templateUrl: './textbox.component.html',
-  styleUrls: ['./textbox.component.css']
+  styleUrls: ['./textbox.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextboxComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => TextboxComponent),
+      multi: true
+    }
+  ]
 })
 export class TextboxComponent extends AbstractFormGroupExt implements OnInit {
   @Input() fieldConfig: any;

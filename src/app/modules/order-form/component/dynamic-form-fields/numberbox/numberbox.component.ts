@@ -1,12 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbstractFormGroupExt } from '../../../extensions/abstract-form-group-ext';
 import { SyncValidator } from '../../../validators/custom-async-validator';
 
 @Component({
   selector: 'app-numberbox',
   templateUrl: './numberbox.component.html',
-  styleUrls: ['./numberbox.component.css']
+  styleUrls: ['./numberbox.component.css'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NumberboxComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => NumberboxComponent),
+      multi: true
+    }
+  ]
 })
 export class NumberboxComponent extends AbstractFormGroupExt implements OnInit {
 

@@ -27,8 +27,6 @@ export class DynamicFormComponent extends AbstractFormGroupExt implements OnInit
 
   @Input() jsonFormSchema!: any[];
 
-  disabled: boolean;
-
   constructor(private fb: FormBuilder) { super(); }
 
   ngOnInit() {
