@@ -13,6 +13,9 @@ export class AbstractFormGroupExt<T = any> implements ControlValueAccessor
   public _onTouched: () => {};
   _form!: FormGroup;
   public _destroy$: Subject<void> = new Subject<void>();
+  getFormGroup(): FormGroup {
+    return this._form;
+  }
   ngOnDestroy() {
     if (this._destroy$ && !this._destroy$.closed) {
       this._destroy$.next();
