@@ -1,10 +1,3 @@
-<div [formGroup]="_form">
-  <p>{{fieldConfig.label}}</p>
-  <dx-text-box [formControlName]="fieldConfig.name" (blur)="onInputBlurred()"
-  [isValid]="isValid(fieldConfig.name)" [showClearButton]="'true'"></dx-text-box>
-  <p>textbox valid: {{isValid(fieldConfig.name)}}<p>
-</div>
-<!--
 <div class="dx-field"  [formGroup]="_form">
   <app-field-label-ui [label]="fieldConfig.label"></app-field-label-ui>
   <div class="dx-field-value">
@@ -23,4 +16,10 @@
   </div>
 </div>
 
- -->
+
+<!-- <div [formGroup]="_form">
+  <p>{{fieldConfig.label}}</p>
+  <dx-text-box [formControlName]="fieldConfig.name" (blur)="onInputBlurred()"
+  [isValid]="isValid(fieldConfig.name)" [showClearButton]="'true'"></dx-text-box>
+  <p>textbox valid: {{isValid(fieldConfig.name)}}<p>
+</div> -->
