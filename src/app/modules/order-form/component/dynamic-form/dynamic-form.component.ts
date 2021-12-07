@@ -69,9 +69,12 @@ export class DynamicFormComponent extends AbstractFormGroupExt implements OnInit
     }
   }
 
-
-
-
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+    const control = formGroup.get(field);
+    control.markAsTouched({ onlySelf: true });
+    });
+  }
 
 
 }

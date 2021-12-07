@@ -22,7 +22,8 @@ import { SyncValidator } from '../../../validators/custom-async-validator';
 })
 export class NumberboxComponent extends AbstractFormGroupExt implements OnInit {
 
-  @Input() fieldConfig: any;
+  //@Input() 
+  fieldConfig: any;
 
   constructor(private fb: FormBuilder) { super(); }
 
