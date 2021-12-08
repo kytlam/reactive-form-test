@@ -21,23 +21,29 @@ import { SyncValidator } from '../../../validators/custom-async-validator';
   ]
 })
 export class TextboxComponent extends AbstractFormGroupExt implements OnInit {
-  @Input() fieldConfig: any;
+  // @Input() 
+  formFieldConfig: any;
 
   constructor(private fb: FormBuilder) { super(); }
 
   ngOnInit() { 
-    if(this.fieldConfig) {
+    console.log(this.formFieldConfig)
+    if(this.formFieldConfig) {
+      console.log("ngOnInit")
       this.buildForm();
+      console.log("ngOnInit2")
     }
   }
 
   buildForm() {
+    console.log("buildForm")
     this._createFormGroup();
+    console.log("buildForm2")
   }
 
   _createFormGroup() {
     this._form = this.fb.group({});
-    this._form.addControl(this.fieldConfig.name,  this._createControl(this.fieldConfig) )
+    this._form.addControl(this.formFieldConfig.name,  this._createControl(this.formFieldConfig) )
     console.log("group: " , this._form);
   }
   

@@ -1,25 +1,25 @@
-<div class="dx-field"  [formGroup]="_form">
-  <app-field-label-ui [label]="fieldConfig.label"></app-field-label-ui>
+<div class="dx-field" [formGroup]="_form">
+  <app-field-label-ui [label]="formFieldConfig.label"></app-field-label-ui>
   <div class="dx-field-value">
     <dx-number-box [showClearButton]="true"
-      [placeholder]="fieldConfig.placeholder"
-      [name]="fieldConfig.name"
-      [formControlName]="fieldConfig.name"
-      [required]="fieldConfig.required"
-      [mode]="fieldConfig.mode"
-      [isValid]="isValid(fieldConfig.name)">
+      [placeholder]="formFieldConfig.placeholder"
+      [name]="formFieldConfig.name"
+      [formControlName]="formFieldConfig.name"
+      [required]="formFieldConfig.required"
+      [mode]="formFieldConfig.mode"
+      [isValid]="isValid(formFieldConfig.name)">
     </dx-number-box>
-    <small class="text-red-700 text-sm" *ngIf="!isValid(fieldConfig.name)">
-      <span *ngFor="let err of Errors(fieldConfig.name);">
+    <small class="text-red-700 text-sm" *ngIf="!isValid(formFieldConfig.name)">
+      <span *ngFor="let err of Errors(formFieldConfig.name);">
         {{err}}
       </span>
     </small>
   </div>
 </div> 
 <!-- <div [formGroup]="_form">
-    <p>{{fieldConfig.label}}</p>
-        <dx-number-box [formControlName]="fieldConfig.name"
+    <p>{{formFieldConfig.label}}</p>
+        <dx-number-box [formControlName]="formFieldConfig.name"
         (blur)="onInputBlurred()"
-        [isValid]="isValid(fieldConfig.name)" [showClearButton]="'true'"></dx-number-box>
-    <p>numberbox valid: {{isValid(fieldConfig.name)}}<p> 
+        [isValid]="isValid(formFieldConfig.name)" [showClearButton]="'true'"></dx-number-box>
+    <p>numberbox valid: {{isValid(formFieldConfig.name)}}<p> 
 </div> -->

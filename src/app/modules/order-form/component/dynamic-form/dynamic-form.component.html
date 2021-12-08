@@ -5,25 +5,34 @@
     <li>touched: {{_form.touched}}</li>
     <li>form value: {{_form.value | json}}</li>
   </ul>
-  <ng-container [formGroup]="_form" *ngFor="let field of jsonFormSchema">
+  
+  <form [formGroup]="_form">
+    <ng-container dynamicFormFiled 
+            *ngFor="let field of jsonFormSchema"
+            [globalDisable]="false"
+            [formFieldConfig]="field">
+        </ng-container>
+  </form>
+
+  <!-- <ng-container [formGroup]="_form" *ngFor="let field of jsonFormSchema">
     <div [ngSwitch]="field.controlType">
       <div *ngSwitchCase="'numberbox'">
-        <!-- <p>{{field.label}}</p>
+        <-- <p>{{field.label}}</p>
         <dx-number-box [formControlName]="field.name"
         (blur)="onInputBlurred()"
         [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-number-box>
-        <p>numberbox valid: {{isValid(field.name)}}<p> -->
+        <p>numberbox valid: {{isValid(field.name)}}<p> --
         <app-numberbox [fieldConfig]="field" [formControlName]="field.name"></app-numberbox>
       </div>
        <div *ngSwitchCase="'textbox'">
-      <!--  <p>{{field.label}}</p>
+      <--  <p>{{field.label}}</p>
         <dx-text-box [formControlName]="field.name" (blur)="onInputBlurred()"
         [isValid]="isValid(field.name)" [showClearButton]="'true'"></dx-text-box>
-        <p>textbox valid: {{isValid(field.name)}}<p> -->
+        <p>textbox valid: {{isValid(field.name)}}<p> --
         <app-textbox [fieldConfig]="field" [formControlName]="field.name"></app-textbox>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
 </div>
 
 <ng-template #subloading>

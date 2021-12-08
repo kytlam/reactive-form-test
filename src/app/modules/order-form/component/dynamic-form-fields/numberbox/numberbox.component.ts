@@ -22,13 +22,13 @@ import { SyncValidator } from '../../../validators/custom-async-validator';
 })
 export class NumberboxComponent extends AbstractFormGroupExt implements OnInit {
 
-  //@Input() 
-  fieldConfig: any;
+  // @Input() 
+  formFieldConfig: any;
 
   constructor(private fb: FormBuilder) { super(); }
 
   ngOnInit() { 
-    if(this.fieldConfig) {
+    if(this.formFieldConfig) {
       this.buildForm();
     }
   }
@@ -39,7 +39,7 @@ export class NumberboxComponent extends AbstractFormGroupExt implements OnInit {
 
   _createFormGroup() {
     this._form = this.fb.group({});
-    this._form.addControl(this.fieldConfig.name,  this._createControl(this.fieldConfig) )
+    this._form.addControl(this.formFieldConfig.name,  this._createControl(this.formFieldConfig) )
     console.log("group: " , this._form);
   }
   

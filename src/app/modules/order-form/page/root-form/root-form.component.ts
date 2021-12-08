@@ -78,6 +78,6 @@ export class RootFormComponent implements OnInit, OnDestroy {
 //https://stackoverflow.com/questions/67230637/how-can-i-send-my-nested-formgroupname-to-my-input-component-connected-to-contro?rq=1
 //https://stackblitz.com/edit/ngx-sub-form-qmnluc?file=src%2Fapp%2Fuser-form%2Fuser-child%2Fuser-child-form.component.ts
 //https://indepth.dev/posts/1245/angular-nested-reactive-forms-using-controlvalueaccessors-cvas
-
-
+//https://itnext.io/partial-reactive-form-with-angular-components-443ca06d8419
+//https://stackblitz.com/edit/monolithic-reactive-form-async-fill?file=app%2Fapp.component.ts
 }
